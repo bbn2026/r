@@ -11,7 +11,7 @@ const p = params.get('p') || '0';
 const nome = params.get('n') || ('Partner ' + p);
 const wa = '393408040089';
 const msg = encodeURIComponent('Ciao, vorrei prenotare un appuntamento. Vengo attraverso ' + nome);
-fetch('https://script.google.com/macros/s/AKfycbxpcSVKA0wE0B0xeorPulZrxCwngqENA6uO80gV4KDVFp97w_JmsTd_noV5kkHXLKN6/exec?p=' + p + '&n=' + encodeURIComponent(nome));
+fetch('https://script.google.com/macros/s/AKfycbyVu_YdLlCik_ipvFfSQQMWfoefd-uTsiSxeBb_gUwKo_3mSmJdfDis2kJpqaHdHbXO/exec' + p + '&n=' + encodeURIComponent(nome));
 window.location.replace('https://wa.me/' + wa + '?text=' + msg);
 </script>
 <p>Apertura WhatsApp...</p>
