@@ -1,31 +1,638 @@
-B
-Brasil Beauty Nails
-SISTEMA COLLABORATORI
-● Live
-📊 Report
-👥 Partner
-➕ Aggiungi
-⚙️ Setup
-Report Referral
-Caricamento...
-🔄 Aggiorna
-Premi 🔄 Aggiorna per caricare i dati dal foglio Google.
-📊 Apri Sheets
-TOTALE REFERRAL
-—
-tutti i tempi
-QUESTO MESE
-—
-referral
-PARTNER ATTIVI
-—
-collaboratori
-COMMISSIONI €
-—
-totale da pagare
-REFERRAL PER GIORNO — QUESTA SETTIMANA
-ULTIMI REFERRAL REGISTRATI
-Premi 🔄 Aggiorna per caricare i dati.
-CLASSIFICA PARTNER — TOTALE
-Premi 🔄 Aggiorna per caricare i dati.
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>BBN Collaboratori</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap">
+<style>
+:root{
+  --bg:#0E0E16;--surf:#16161F;--card:#1D1D28;--bd:#2C2C3E;
+  --gold:#D4A847;--gold-dim:#8A6D2A;--tx:#E2E2EE;--mu:#7A7A90;
+  --ok:#4FC87A;--font-d:'Playfair Display',Georgia,serif;--font-b:'DM Sans',system-ui,sans-serif;
+  color-scheme:dark;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--tx);font-family:var(--font-b);font-size:15px;line-height:1.5;min-height:100vh}
+.hdr{background:var(--surf);border-bottom:1px solid var(--bd);padding:12px 20px;display:flex;align-items:center;gap:12px;position:sticky;top:0;z-index:100}
+.lmark{width:36px;height:36px;background:var(--gold);border-radius:8px;display:flex;align-items:center;justify-content:center;font-family:var(--font-d);font-size:17px;color:#000;flex-shrink:0}
+.htxt h1{font-family:var(--font-d);font-size:16px;color:var(--gold);line-height:1.2}
+.htxt p{font-size:11px;color:var(--mu);letter-spacing:.05em;text-transform:uppercase}
+.hbadge{margin-left:auto;background:rgba(79,200,122,.12);border:1px solid rgba(79,200,122,.3);color:var(--ok);font-size:11px;padding:3px 10px;border-radius:100px;white-space:nowrap}
+.tabs{display:flex;background:var(--surf);border-bottom:1px solid var(--bd);padding-inline:4px;overflow-x:auto;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tab{padding:12px 16px;font-size:13px;color:var(--mu);cursor:pointer;white-space:nowrap;border:none;border-bottom:2px solid transparent;background:none;font-family:var(--font-b);font-weight:500;transition:color .15s,border-color .15s}
+.tab:hover{color:var(--tx)}
+.tab.active{color:var(--gold);border-bottom-color:var(--gold)}
+.pg{display:none;padding:20px;max-width:800px;margin:0 auto}
+.pg.active{display:block}
+.sec-hd{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:18px;gap:12px;flex-wrap:wrap}
+.sec-hd h2{font-family:var(--font-d);font-size:21px}
+.sec-hd p{font-size:13px;color:var(--mu);margin-top:2px}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:20px;margin-bottom:16px}
+.ctitle{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--mu);margin-bottom:14px;font-weight:500}
+.sgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:12px;margin-bottom:18px}
+.stile{background:var(--card);border:1px solid var(--bd);border-radius:10px;padding:16px}
+.slabel{font-size:11px;color:var(--mu);letter-spacing:.04em;margin-bottom:6px}
+.sval{font-size:28px;font-variant-numeric:tabular-nums;font-weight:600;line-height:1}
+.sval.g{color:var(--gold)}
+.ssub{font-size:11px;color:var(--mu);margin-top:4px}
+.twrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:13px;min-width:420px}
+th{text-align:left;padding:8px 12px;font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:var(--mu);border-bottom:1px solid var(--bd);font-weight:500}
+td{padding:10px 12px;border-bottom:1px solid rgba(44,44,62,.5);color:var(--tx)}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:rgba(212,168,71,.04)}
+.pcard{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:16px;display:flex;align-items:center;gap:14px;cursor:pointer;transition:border-color .15s;margin-bottom:10px}
+.pcard:hover{border-color:var(--gold-dim)}
+.pav{width:44px;height:44px;border-radius:10px;background:rgba(212,168,71,.12);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.pinfo{flex:1;min-width:0}
+.pname{font-weight:600;font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pcat{font-size:12px;color:var(--mu);margin-top:2px}
+.pstat{text-align:right;flex-shrink:0}
+.pcnt{font-size:22px;font-weight:600;color:var(--gold);font-variant-numeric:tabular-nums;line-height:1}
+.pclbl{font-size:10px;color:var(--mu)}
+.qrbtn{background:rgba(212,168,71,.1);border:1px solid rgba(212,168,71,.25);color:var(--gold);border-radius:8px;padding:6px 12px;font-size:12px;cursor:pointer;font-family:var(--font-b);font-weight:500;white-space:nowrap;transition:background .15s}
+.qrbtn:hover{background:rgba(212,168,71,.18)}
+.fgrp{margin-bottom:16px}
+label{display:block;font-size:12px;font-weight:500;color:var(--mu);margin-bottom:6px;letter-spacing:.03em}
+input,select{width:100%;background:var(--surf);border:1px solid var(--bd);border-radius:8px;padding:10px 14px;color:var(--tx);font-family:var(--font-b);font-size:14px;outline:none;transition:border-color .15s}
+input:focus,select:focus{border-color:var(--gold-dim)}
+input::placeholder{color:var(--mu)}
+select option{background:var(--surf)}
+.btn{display:inline-flex;align-items:center;gap:6px;background:var(--gold);color:#000;border:none;border-radius:8px;padding:10px 20px;font-size:14px;font-weight:600;font-family:var(--font-b);cursor:pointer;transition:opacity .15s}
+.btn:hover{opacity:.9}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.btn-g{background:transparent;color:var(--mu);border:1px solid var(--bd)}
+.btn-g:hover{background:var(--card);color:var(--tx);opacity:1}
+.btn-sm{padding:7px 14px;font-size:13px}
+.ov{position:fixed;inset:0;background:rgba(0,0,0,.9);z-index:200;display:flex;align-items:center;justify-content:center;padding:16px}
+.ov[hidden]{display:none!important}
+.mdl{background:var(--card);border:1px solid var(--bd);border-radius:16px;padding:24px 20px;max-width:440px;width:100%;text-align:center}
+.mdl h2{font-family:var(--font-d);font-size:20px;color:var(--gold);margin-bottom:4px}
+.mdsub{font-size:12px;color:var(--mu);margin-bottom:16px}
+.qrwrap{background:#fff;border-radius:12px;padding:16px;display:inline-block;margin-bottom:12px}
+.murl{font-size:10px;color:var(--mu);word-break:break-all;background:var(--surf);border-radius:6px;padding:8px 10px;margin-bottom:14px;text-align:left;font-family:monospace}
+.mact{display:flex;gap:8px;justify-content:center;flex-wrap:wrap}
+.wbars{display:flex;gap:4px;align-items:flex-end;height:60px;margin-bottom:4px}
+.wb{flex:1;background:var(--gold);border-radius:3px 3px 0 0;opacity:.4;min-height:4px;transition:opacity .2s}
+.wb.hi{opacity:1}
+.wlbls{display:flex;gap:4px}
+.wlbl{flex:1;text-align:center;font-size:10px;color:var(--mu)}
+.syncbar{display:flex;align-items:center;justify-content:space-between;background:rgba(212,168,71,.07);border:1px solid rgba(212,168,71,.2);border-radius:10px;padding:12px 16px;margin-bottom:18px;gap:12px;flex-wrap:wrap}
+.syncbar p{font-size:12px;color:var(--mu);flex:1}
+.syncbar strong{color:var(--tx)}
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--ok);color:#000;font-weight:600;font-size:13px;padding:10px 20px;border-radius:100px;z-index:300;transition:transform .25s cubic-bezier(.34,1.56,.64,1);white-space:nowrap}
+.toast.show{transform:translateX(-50%) translateY(0)}
+.empty{text-align:center;padding:40px 20px;color:var(--mu)}
+.empty .ic{font-size:40px;margin-bottom:12px}
+.empty h3{color:var(--tx);margin-bottom:8px}
+.hl{background:rgba(212,168,71,.07);border:1px solid rgba(212,168,71,.2);border-radius:10px;padding:16px;margin-bottom:20px}
+.hl label{color:var(--gold)}
+.steps{counter-reset:s;list-style:none}
+.steps li{counter-increment:s;display:flex;gap:14px;margin-bottom:22px;align-items:flex-start}
+.steps li::before{content:counter(s);width:28px;height:28px;border-radius:50%;background:rgba(212,168,71,.12);border:1px solid rgba(212,168,71,.35);color:var(--gold);font-size:13px;font-weight:600;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.steps li>div{padding-top:3px}
+.steps li h4{font-size:14px;font-weight:600;margin-bottom:4px}
+.steps li p{font-size:13px;color:var(--mu)}
+.cbk{background:#0A0A12;border:1px solid var(--bd);border-radius:10px;padding:16px;font-family:'Courier New',monospace;font-size:12px;line-height:1.7;color:#C8C8E8;overflow-x:auto;margin-bottom:10px;white-space:pre;tab-size:2;max-height:300px;overflow-y:auto}
+.chdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}
+.clbl{font-size:12px;color:var(--mu);font-weight:500}
+.cpybtn{background:var(--surf);border:1px solid var(--bd);color:var(--mu);border-radius:6px;padding:4px 10px;font-size:11px;cursor:pointer;font-family:var(--font-b);transition:color .15s}
+.cpybtn:hover{color:var(--tx)}
+.cpybtn.ok{color:var(--ok)}
+@media(max-width:480px){
+  .sgrid{grid-template-columns:repeat(2,1fr)}
+  .pstat{display:none}
+  .mdl{padding:20px}
+  .mact{flex-direction:column}
+  .sec-hd{flex-direction:column;gap:8px}
+}
+</style>
+</head>
+<body>
 
+<div class="hdr">
+  <div class="lmark">B</div>
+  <div class="htxt">
+    <h1>Brasil Beauty Nails</h1>
+    <p>Sistema Collaboratori</p>
+  </div>
+  <span class="hbadge" id="liveBadge">● Live</span>
+</div>
+
+<div class="tabs">
+  <button class="tab active" onclick="nav('report',this)">📊 Report</button>
+  <button class="tab" onclick="nav('partner',this)">👥 Partner</button>
+  <button class="tab" onclick="nav('aggiungi',this)">➕ Aggiungi</button>
+  <button class="tab" onclick="nav('setup',this)">⚙️ Setup</button>
+</div>
+
+<!-- REPORT -->
+<div class="pg active" id="pg-report">
+  <div class="sec-hd">
+    <div><h2>Report Referral</h2><p id="reportSub">Caricamento...</p></div>
+    <button class="btn btn-sm" id="syncBtn" onclick="syncFromSheets()">🔄 Aggiorna</button>
+  </div>
+  <div class="syncbar">
+    <p id="syncStatus">Premi <strong>🔄 Aggiorna</strong> per caricare i dati dal foglio Google.</p>
+    <button class="btn btn-g btn-sm" onclick="window.open('https://docs.google.com/spreadsheets/d/'+SHEET_ID,'_blank')">📊 Apri Sheets</button>
+  </div>
+  <div class="sgrid">
+    <div class="stile"><div class="slabel">TOTALE REFERRAL</div><div class="sval g" id="statTot">—</div><div class="ssub">tutti i tempi</div></div>
+    <div class="stile"><div class="slabel">QUESTO MESE</div><div class="sval" id="statMese">—</div><div class="ssub" id="statMeseSub">referral</div></div>
+    <div class="stile"><div class="slabel">PARTNER ATTIVI</div><div class="sval" id="statPartner">—</div><div class="ssub">collaboratori</div></div>
+    <div class="stile"><div class="slabel">COMMISSIONI €</div><div class="sval g" id="statComm">—</div><div class="ssub">totale da pagare</div></div>
+  </div>
+  <div class="card">
+    <div class="ctitle">REFERRAL PER GIORNO — questa settimana</div>
+    <div class="wbars" id="wbars"></div>
+    <div class="wlbls" id="wlbls"></div>
+  </div>
+  <div class="card">
+    <div class="ctitle">ULTIMI REFERRAL REGISTRATI</div>
+    <div id="lastClicks"><p style="color:var(--mu);font-size:13px">Premi 🔄 Aggiorna per caricare i dati.</p></div>
+  </div>
+  <div class="card">
+    <div class="ctitle">CLASSIFICA PARTNER — totale</div>
+    <div id="ranking"><p style="color:var(--mu);font-size:13px">Premi 🔄 Aggiorna per caricare i dati.</p></div>
+  </div>
+</div>
+
+<!-- PARTNER -->
+<div class="pg" id="pg-partner">
+  <div class="sec-hd">
+    <div><h2>I tuoi Partner</h2><p>Tocca QR per il codice · +1 per referral manuale</p></div>
+    <button class="btn btn-sm" onclick="openRef()">➕ Referral</button>
+  </div>
+  <div id="plist"></div>
+</div>
+
+<!-- AGGIUNGI -->
+<div class="pg" id="pg-aggiungi">
+  <div class="sec-hd"><div><h2>Aggiungi Partner</h2><p>Inserisci i dati del nuovo collaboratore</p></div></div>
+  <div class="card">
+    <form id="pform" onsubmit="addPartner(event)">
+      <div class="fgrp"><label>NOME ATTIVITÀ *</label><input id="i-nome" placeholder="es. Parrucchiere Simona" required></div>
+      <div class="fgrp"><label>CATEGORIA</label>
+        <select id="i-cat">
+          <option>💇 Parrucchiere</option><option>💄 Estetica</option><option>💊 Farmacia</option>
+          <option>🧘 Benessere</option><option>👗 Abbigliamento</option><option>☕ Bar / Caffè</option>
+          <option>🏥 Studio Medico</option><option>📌 Altro</option>
+        </select>
+      </div>
+      <div class="fgrp"><label>NOME REFERENTE (opzionale)</label><input id="i-ref" placeholder="es. Maria Rossi"></div>
+      <div class="fgrp"><label>INDIRIZZO (opzionale)</label><input id="i-ind" placeholder="es. Via Cola di Rienzo, 45"></div>
+      <div class="fgrp"><label>COMMISSIONE PER CLIENTE</label>
+        <select id="i-comm"><option value="5">5 € a cliente</option><option value="10">10 € a cliente</option><option value="3">3 € a cliente</option><option value="0">Accordo separato</option></select>
+      </div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <button type="submit" class="btn">✓ Aggiungi Partner</button>
+        <button type="button" class="btn btn-g" onclick="document.getElementById('pform').reset()">Annulla</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- SETUP -->
+<div class="pg" id="pg-setup">
+  <div class="sec-hd"><div><h2>Setup Tecnico</h2><p>Tracciamento automatico — completamente gratuito</p></div></div>
+  <div class="hl">
+    <div class="fgrp" style="margin-bottom:0">
+      <label>IL TUO NUMERO WHATSAPP (con prefisso, senza +)</label>
+      <input id="wa" placeholder="es. 393331234567" oninput="updateScript()">
+    </div>
+  </div>
+  <ul class="steps">
+    <li><div>
+      <h4>Crea un foglio Google Sheets</h4>
+      <p>Vai su <strong>sheets.new</strong> → crea il foglio. Il sistema scriverà automaticamente i dati lì.</p>
+    </div></li>
+    <li><div>
+      <h4>Apri Apps Script</h4>
+      <p>Dal menu del foglio: <strong>Estensioni → Apps Script</strong>. Cancella tutto il codice esistente.</p>
+    </div></li>
+    <li><div>
+      <h4>Incolla il codice qui sotto</h4>
+      <div class="chdr"><span class="clbl">Code.gs — Apps Script</span><button class="cpybtn" id="cpyBtn" onclick="cpyScript(this)">📋 Copia codice</button></div>
+      <div class="cbk" id="scriptCode"></div>
+    </div></li>
+    <li><div>
+      <h4>Pubblica come Web App</h4>
+      <p><strong>Distribuisci → Nuova distribuzione</strong> → Tipo: <strong>App web</strong> → Accesso: <strong>Chiunque</strong> → Distribuisci. Copia l'URL.</p>
+    </div></li>
+    <li><div>
+      <h4>Rendi il foglio pubblico (solo lettura)</h4>
+      <p>Nel foglio Google: <strong>Condividi → Accesso generale → Chiunque abbia il link → Visualizzatore</strong>. Serve per la dashboard.</p>
+    </div></li>
+  </ul>
+  <div class="card">
+    <div class="ctitle">COME FUNZIONA</div>
+    <div style="font-size:13px;color:var(--mu);line-height:2.2">
+      <p>📱 <strong style="color:var(--tx)">Cliente scansiona il QR</strong> del partner</p>
+      <p>📝 <strong style="color:var(--tx)">Il sistema registra</strong> data, ora, nome partner nel Google Sheet</p>
+      <p>💬 <strong style="color:var(--tx)">WhatsApp si apre</strong> con messaggio già scritto col nome del partner</p>
+      <p>📊 <strong style="color:var(--tx)">Questa dashboard</strong> si aggiorna in tempo reale premendo 🔄</p>
+    </div>
+  </div>
+</div>
+
+<!-- REFERRAL MODAL -->
+<div class="ov" id="refOv" hidden>
+  <div class="mdl" style="text-align:left">
+    <h2 style="margin-bottom:4px">➕ Referral Manuale</h2>
+    <p class="mdsub">Aggiungi un cliente arrivato tramite partner</p>
+    <div class="fgrp"><label>PARTNER</label><select id="r-partner"></select></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+      <div class="fgrp"><label>DATA</label><input type="date" id="r-data"></div>
+      <div class="fgrp"><label>ORA</label><input type="time" id="r-ora"></div>
+    </div>
+    <div class="fgrp"><label>COMMISSIONE</label>
+      <select id="r-comm"><option value="3">3 €</option><option value="5" selected>5 €</option><option value="10">10 €</option></select>
+    </div>
+    <div style="display:flex;gap:10px;justify-content:flex-end;margin-top:4px">
+      <button class="btn btn-g" onclick="closeRef()">Annulla</button>
+      <button class="btn" onclick="saveRef2()">✓ Salva</button>
+    </div>
+  </div>
+</div>
+
+<!-- QR MODAL -->
+<div class="ov" id="qrOv" hidden>
+  <div class="mdl">
+    <h2 id="mTitle">Partner</h2>
+    <p class="mdsub" id="mSub">Scansiona per contattare Brasil Beauty Nails</p>
+    <div class="qrwrap">
+      <img id="qrImg" width="320" height="320" style="display:block;border-radius:4px" alt="QR Code">
+    </div>
+    <div id="mcode" style="background:rgba(212,168,71,.1);border:1px solid rgba(212,168,71,.25);border-radius:8px;padding:8px 14px;margin-bottom:14px;font-size:12px;color:var(--tx)"></div>
+    <div class="murl" id="mUrl"></div>
+    <div class="mact">
+      <button class="btn btn-g" onclick="closeQR()">Chiudi</button>
+      <button class="btn" onclick="cpyUrl()">Copia link</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ── Config ──────────────────────────────────────────────
+const SHEET_ID = "1YNj6A4OYUQs9H0as9K7sci_BJ5II1b0neq-aKvZbU84";
+const GITHUB_URL = "https://bbn2026.github.io/r/";
+
+// ── State ────────────────────────────────────────────────
+let partners = [], referrals = [], sUrl = "";
+const GIORNI = ["Domenica","Lunedì","Martedì","Mercoledì","Giovedì","Venerdì","Sabato"];
+const GIORNI_SHORT = ["Dom","Lun","Mar","Mer","Gio","Ven","Sab"];
+
+function nextPid() { return partners.length ? Math.max(...partners.map(p => p.pid||0)) + 1 : 1; }
+
+// ── Load / Save ──────────────────────────────────────────
+function load() {
+  try {
+    const s = localStorage.getItem("bbn_p");
+    partners = s ? JSON.parse(s) : [];
+    sUrl = localStorage.getItem("bbn_su") || "";
+    const wa = localStorage.getItem("bbn_wa") || "";
+    if (wa) document.getElementById("wa").value = wa;
+    if (sUrl) document.getElementById("wa"); // just touch dom
+  } catch { partners = []; }
+  updateTotals();
+}
+function save() { try { localStorage.setItem("bbn_p", JSON.stringify(partners)); } catch {} }
+
+// ── Sync da Google Sheets ────────────────────────────────
+async function syncFromSheets() {
+  const btn = document.getElementById("syncBtn");
+  const status = document.getElementById("syncStatus");
+  btn.textContent = "⏳ Caricamento...";
+  btn.disabled = true;
+  if (status) { status.textContent = "Connessione al foglio Google..."; }
+  try {
+    const url = "https://docs.google.com/spreadsheets/d/" + SHEET_ID +
+      "/gviz/tq?tqx=out:json&sheet=Referral%20Log&t=" + Date.now();
+    const res = await fetch(url);
+    if (!res.ok) throw new Error("HTTP " + res.status);
+    const text = await res.text();
+    // gviz restituisce: /*O_o*/\ngoogle.visualization.Query.setResponse({...})
+    const jsonStr = text.slice(text.indexOf("{"), text.lastIndexOf("}") + 1);
+    const json = JSON.parse(jsonStr);
+    const rows = (json.table && json.table.rows) || [];
+    // Colonne: 0=Data, 1=Ora, 2=Giorno, 3=Partner, 4=ID, 5=Commissione
+    referrals = rows.map(r => ({
+      data:   r.c && r.c[0] ? (r.c[0].f || String(r.c[0].v || "")) : "",
+      ora:    r.c && r.c[1] ? String(r.c[1].v || "") : "",
+      giorno: r.c && r.c[2] ? String(r.c[2].v || "") : "",
+      nome:   r.c && r.c[3] ? String(r.c[3].v || "") : "",
+      pid:    r.c && r.c[4] ? String(r.c[4].v || "") : "",
+      comm:   r.c && r.c[5] ? Number(r.c[5].v) || 5 : 5,
+    })).reverse(); // più recenti prima
+    // Aggiorna contatori partner da dati reali
+    partners.forEach(p => {
+      const pid = String(p.pid || p.id);
+      p.n = referrals.filter(r => String(r.pid) === pid || r.nome === p.nome).length;
+    });
+    save();
+    updateTotals();
+    renderRanking();
+    renderLastClicks();
+    renderBars();
+    const n = referrals.length;
+    const now = new Date().toLocaleTimeString("it-IT", {hour:"2-digit",minute:"2-digit"});
+    if (status) { status.innerHTML = "✓ Aggiornato alle <strong style='color:var(--tx)'>" + now + "</strong> · <strong style='color:var(--gold)'>" + n + "</strong> referral totali"; }
+    document.getElementById("reportSub").textContent = "Dati in tempo reale · Prati, Roma";
+    toast("✓ " + n + " referral caricati!");
+  } catch (err) {
+    console.error(err);
+    if (status) { status.textContent = "❌ Errore — assicurati che il foglio sia condiviso come 'Chiunque con il link'"; }
+    toast("❌ Errore connessione Sheets");
+  } finally {
+    btn.textContent = "🔄 Aggiorna";
+    btn.disabled = false;
+  }
+}
+
+// ── Stats ────────────────────────────────────────────────
+function updateTotals() {
+  const tot = referrals.length;
+  const now = new Date();
+  const mese = now.getMonth() + 1;
+  const anno = now.getFullYear();
+  const meseRef = referrals.filter(r => {
+    if (!r.data) return false;
+    // data formato dd/MM/yyyy
+    const p = r.data.split("/");
+    return p.length === 3 && parseInt(p[1]) === mese && parseInt(p[2]) === anno;
+  }).length;
+  const comm = referrals.reduce((a, r) => a + (Number(r.comm) || 5), 0);
+  document.getElementById("statTot").textContent = tot || "—";
+  document.getElementById("statMese").textContent = meseRef || "—";
+  document.getElementById("statPartner").textContent = partners.length || "—";
+  document.getElementById("statComm").textContent = comm ? comm + " €" : "—";
+  const nomeMese = ["Gen","Feb","Mar","Apr","Mag","Giu","Lug","Ago","Set","Ott","Nov","Dic"][now.getMonth()];
+  document.getElementById("statMeseSub").textContent = nomeMese + " " + anno;
+}
+
+function renderLastClicks() {
+  const el = document.getElementById("lastClicks");
+  if (!el) return;
+  if (!referrals.length) {
+    el.innerHTML = '<p style="color:var(--mu);font-size:13px;padding:8px 0">Nessun referral. Premi 🔄 Aggiorna.</p>';
+    return;
+  }
+  const rows = referrals.slice(0, 25).map(r => `<tr>
+    <td>${r.data || ""}</td>
+    <td><strong>${r.nome || ""}</strong></td>
+    <td>${r.ora || ""}</td>
+    <td>${r.giorno || ""}</td>
+    <td style="color:var(--gold);font-weight:600">${r.comm || 5} €</td>
+  </tr>`).join("");
+  el.innerHTML = `<div class="twrap"><table>
+    <thead><tr><th>Data</th><th>Partner</th><th>Ora</th><th>Giorno</th><th>Comm.</th></tr></thead>
+    <tbody>${rows}</tbody>
+  </table></div>`;
+}
+
+function renderBars() {
+  const bc = document.getElementById("wbars");
+  const bl = document.getElementById("wlbls");
+  if (!bc) return;
+  // Conta referral per giorno della settimana corrente
+  const today = new Date();
+  const dayOfWeek = today.getDay(); // 0=Dom
+  const vals = [0,0,0,0,0,0,0];
+  const labels = [];
+  // Costruisci i 7 giorni (Lun→Dom)
+  for (let i = 0; i < 7; i++) {
+    const d = new Date(today);
+    const diff = i - (dayOfWeek === 0 ? 6 : dayOfWeek - 1); // offset da Lun
+    d.setDate(today.getDate() + diff);
+    const dd = String(d.getDate()).padStart(2,"0");
+    const mm = String(d.getMonth()+1).padStart(2,"0");
+    const yyyy = d.getFullYear();
+    const dateStr = dd+"/"+mm+"/"+yyyy;
+    vals[i] = referrals.filter(r => r.data === dateStr).length;
+    labels.push(GIORNI_SHORT[(d.getDay())]);
+  }
+  const mx = Math.max(...vals, 1);
+  bc.innerHTML = ""; bl.innerHTML = "";
+  vals.forEach((v, i) => {
+    const b = document.createElement("div");
+    b.className = "wb" + (i === (dayOfWeek === 0 ? 6 : dayOfWeek - 1) ? " hi" : "");
+    b.style.height = (v / mx * 52 + 4) + "px";
+    b.title = labels[i] + ": " + v + " referral";
+    bc.appendChild(b);
+    const l = document.createElement("div");
+    l.className = "wlbl"; l.textContent = labels[i];
+    bl.appendChild(l);
+  });
+}
+
+function renderRanking() {
+  // Conta da referrals reali per nome partner
+  const count = {};
+  referrals.forEach(r => {
+    const k = r.nome || "Sconosciuto";
+    count[k] = (count[k] || 0) + 1;
+  });
+  // Merge con partner registrati
+  const rows = partners.map(p => ({
+    nome: p.nome, cat: p.cat, n: count[p.nome] || p.n || 0, comm: p.comm || 5
+  })).sort((a, b) => b.n - a.n);
+  const m = ["🥇","🥈","🥉"];
+  if (!rows.length) {
+    document.getElementById("ranking").innerHTML = '<p style="color:var(--mu);font-size:13px">Aggiungi partner nel tab 👥.</p>';
+    return;
+  }
+  document.getElementById("ranking").innerHTML = `<div class="twrap"><table>
+    <thead><tr><th>#</th><th>Partner</th><th>Referral</th><th>Commissioni</th></tr></thead>
+    <tbody>${rows.map((p, i) => `<tr>
+      <td>${m[i] || (i+1)}</td>
+      <td><strong>${p.nome}</strong><br><span style="font-size:11px;color:var(--mu)">${(p.cat||"").split(" ").slice(1).join(" ")}</span></td>
+      <td><span style="color:var(--gold);font-weight:600">${p.n}</span></td>
+      <td>${p.n * p.comm} €</td>
+    </tr>`).join("")}</tbody>
+  </table></div>`;
+}
+
+// ── Navigation ───────────────────────────────────────────
+function nav(id, btn) {
+  document.querySelectorAll(".pg").forEach(p => p.classList.remove("active"));
+  document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
+  document.getElementById("pg-" + id).classList.add("active");
+  btn.classList.add("active");
+  if (id === "partner") renderPartners();
+  if (id === "report") { renderRanking(); renderBars(); renderLastClicks(); }
+  if (id === "setup") updateScript();
+}
+
+// ── Partner list ─────────────────────────────────────────
+function renderPartners() {
+  const c = document.getElementById("plist");
+  if (!partners.length) {
+    c.innerHTML = `<div class="empty"><div class="ic">👥</div><h3>Nessun partner ancora</h3><p>Vai su "Aggiungi" per inserire il primo collaboratore.</p></div>`;
+    return;
+  }
+  // Aggiorna contatori da referrals
+  partners.forEach(p => {
+    p.n = referrals.filter(r => String(r.pid) === String(p.pid||p.id) || r.nome === p.nome).length;
+  });
+  c.innerHTML = partners.map(p => `
+    <div class="pcard">
+      <div class="pav">${(p.cat||"📌").split(" ")[0]}</div>
+      <div class="pinfo">
+        <div class="pname">${p.nome}</div>
+        <div class="pcat">${(p.cat||"").split(" ").slice(1).join(" ")} · ${p.ind || "Prati"}</div>
+      </div>
+      <div class="pstat">
+        <div class="pcnt">${p.n || 0}</div>
+        <div class="pclbl">referral</div>
+      </div>
+      <button class="qrbtn" onclick="openRef('${p.id}')">+1</button>
+      <button class="qrbtn" onclick="showQR('${p.id}')">📱 QR</button>
+    </div>`).join("");
+}
+
+function getUrl(p) {
+  return GITHUB_URL + "?p=" + (p.pid || p.id) + "&n=" + encodeURIComponent(p.nome);
+}
+
+function showQR(id) {
+  const p = partners.find(x => x.id === id);
+  if (!p) return;
+  if (!p.pid) { p.pid = nextPid(); save(); }
+  const url = getUrl(p);
+  document.getElementById("mTitle").textContent = p.nome;
+  document.getElementById("mSub").textContent = "Codice P" + p.pid + " · " + (p.cat||"").split(" ").slice(1).join(" ");
+  document.getElementById("mcode").innerHTML =
+    "Quando scansionano, WhatsApp si apre con <strong>\"" + p.nome + "\"</strong> già scritto";
+  document.getElementById("mUrl").textContent = url;
+  const img = document.getElementById("qrImg");
+  img.src = "https://api.qrserver.com/v1/create-qr-code/?size=320x320&data=" + encodeURIComponent(url) + "&ecc=L&margin=3";
+  document.getElementById("qrOv").hidden = false;
+}
+function closeQR() { document.getElementById("qrOv").hidden = true; }
+document.getElementById("qrOv").addEventListener("click", function(e) { if (e.target === this) closeQR(); });
+
+function cpyUrl() {
+  const u = document.getElementById("mUrl").textContent;
+  navigator.clipboard.writeText(u).then(() => toast("✓ Link copiato!")).catch(() => toast("Errore copia"));
+}
+
+// ── Add partner ──────────────────────────────────────────
+function addPartner(e) {
+  e.preventDefault();
+  const nome = document.getElementById("i-nome").value.trim();
+  if (!nome) return;
+  const id = "p" + Date.now();
+  const pid = nextPid();
+  partners.push({
+    id, pid, nome,
+    cat: document.getElementById("i-cat").value,
+    ref: document.getElementById("i-ref").value.trim(),
+    ind: document.getElementById("i-ind").value.trim(),
+    comm: parseInt(document.getElementById("i-comm").value) || 5,
+    n: 0
+  });
+  save();
+  updateTotals();
+  document.getElementById("pform").reset();
+  toast("✓ Partner aggiunto! Genera il suo QR nel tab 👥");
+  document.querySelectorAll(".tab")[1].click();
+}
+
+// ── Manual referral ───────────────────────────────────────
+function openRef(pid) {
+  const sel = document.getElementById("r-partner");
+  sel.innerHTML = partners.map(p => `<option value="${p.id}">${p.nome}</option>`).join("");
+  if (pid) sel.value = pid;
+  const now = new Date();
+  document.getElementById("r-data").value = now.toISOString().slice(0, 10);
+  document.getElementById("r-ora").value = now.toTimeString().slice(0, 5);
+  document.getElementById("refOv").hidden = false;
+}
+function closeRef() { document.getElementById("refOv").hidden = true; }
+document.getElementById("refOv").addEventListener("click", function(e) { if (e.target === this) closeRef(); });
+
+function saveRef2() {
+  const pid = document.getElementById("r-partner").value;
+  if (!pid) return;
+  const p = partners.find(x => x.id === pid);
+  if (p) { p.n = (p.n || 0) + 1; save(); }
+  updateTotals();
+  renderRanking();
+  closeRef();
+  toast("✓ Referral registrato! Si aggiungerà a Sheets alla prossima scansione.");
+  renderPartners();
+}
+
+// ── Setup script ──────────────────────────────────────────
+function getScript() {
+  const wa = (document.getElementById("wa").value.trim()) || "39XXXXXXXXXX";
+  return `// BRASIL BEAUTY NAILS — Tracciamento Collaboratori
+const WA_NUMBER = "${wa}";
+
+function doGet(e) {
+  const pid = e.parameter.p || "0";
+  const nome = e.parameter.n || ("Partner " + pid);
+  logReferral(pid, nome, new Date());
+  const msg = encodeURIComponent("Ciao, vorrei prenotare un appuntamento. Vengo attraverso " + nome);
+  const waUrl = "https://wa.me/" + WA_NUMBER + "?text=" + msg;
+  return HtmlService.createHtmlOutput(
+    "<html><head></head><body>" +
+    "<script>window.location.replace('" + waUrl + "');<\\/script>" +
+    "<p>Apertura WhatsApp...</p></body></html>"
+  );
+}
+
+function logReferral(pid, nome, ts) {
+  const ss = SpreadsheetApp.getActiveSpreadsheet();
+  let sheet = ss.getSheetByName("Referral Log");
+  if (!sheet) {
+    sheet = ss.insertSheet("Referral Log");
+    sheet.appendRow(["Data", "Ora", "Giorno", "Partner", "ID", "Commissione EUR"]);
+    sheet.getRange(1,1,1,6).setFontWeight("bold")
+      .setBackground("#0E0E16").setFontColor("#D4A847");
+    sheet.setFrozenRows(1);
+  }
+  const giorni = ["Dom","Lun","Mar","Mer","Gio","Ven","Sab"];
+  sheet.appendRow([
+    Utilities.formatDate(ts, "Europe/Rome", "dd/MM/yyyy"),
+    Utilities.formatDate(ts, "Europe/Rome", "HH:mm"),
+    giorni[ts.getDay()],
+    nome, pid, 5
+  ]);
+}`;
+}
+
+function updateScript() {
+  const wa = document.getElementById("wa").value.trim();
+  if (wa) try { localStorage.setItem("bbn_wa", wa); } catch {}
+  const el = document.getElementById("scriptCode");
+  if (el) el.textContent = getScript();
+}
+
+function cpyScript(btn) {
+  navigator.clipboard.writeText(getScript()).then(() => {
+    btn.textContent = "✓ Copiato!"; btn.classList.add("ok");
+    setTimeout(() => { btn.textContent = "📋 Copia codice"; btn.classList.remove("ok"); }, 2500);
+  }).catch(() => toast("Seleziona il codice → Ctrl+A → Ctrl+C"));
+}
+
+// ── Toast ─────────────────────────────────────────────────
+function toast(msg) {
+  const t = document.getElementById("toast");
+  t.textContent = msg; t.classList.add("show");
+  setTimeout(() => t.classList.remove("show"), 2800);
+}
+
+// ── Init ──────────────────────────────────────────────────
+load();
+renderBars();
+updateScript();
+// Auto-sync al caricamento
+syncFromSheets();
+</script>
+</body>
+</html>
