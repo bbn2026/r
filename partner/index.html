@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>BBN Partner</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap">
+<style>
+:root{
+  --bg:#0E0E16;--surf:#16161F;--card:#1D1D28;--bd:#2C2C3E;
+  --gold:#D4A847;--gold-dim:#8A6D2A;--tx:#E2E2EE;--mu:#7A7A90;
+  --ok:#4FC87A;--font-d:'Playfair Display',Georgia,serif;--font-b:'DM Sans',system-ui,sans-serif;
+  color-scheme:dark;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--tx);font-family:var(--font-b);font-size:15px;line-height:1.5;min-height:100vh}
+.hdr{background:var(--surf);border-bottom:1px solid var(--bd);padding:14px 20px;display:flex;align-items:center;gap:12px}
+.lmark{width:38px;height:38px;background:var(--gold);border-radius:8px;display:flex;align-items:center;justify-content:center;font-family:var(--font-d);font-size:18px;color:#000;flex-shrink:0;font-weight:700}
+.htxt h1{font-family:var(--font-d);font-size:17px;color:var(--gold)}
+.htxt p{font-size:11px;color:var(--mu);letter-spacing:.05em;text-transform:uppercase}
+.pg{padding:20px;max-width:700px;margin:0 auto}
+.hero{background:linear-gradient(135deg,rgba(212,168,71,.12),rgba(212,168,71,.04));border:1px solid rgba(212,168,71,.2);border-radius:16px;padding:24px;margin-bottom:20px;text-align:center}
+.hero-name{font-family:var(--font-d);font-size:26px;color:var(--gold);margin-bottom:4px}
+.hero-sub{font-size:13px;color:var(--mu)}
+.sgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:20px}
+.stile{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:16px;text-align:center}
+.slabel{font-size:11px;color:var(--mu);letter-spacing:.04em;margin-bottom:6px;text-transform:uppercase}
+.sval{font-size:28px;font-variant-numeric:tabular-nums;font-weight:600;color:var(--gold)}
+.ssub{font-size:11px;color:var(--mu);margin-top:2px}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:20px;margin-bottom:16px}
+.ctitle{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--mu);margin-bottom:16px;font-weight:500}
+.ref-row{border-bottom:1px solid rgba(44,44,62,.5);padding:14px 0;display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:center}
+.ref-row:last-child{border-bottom:none}
+.ref-date{font-size:12px;color:var(--mu);white-space:nowrap}
+.ref-day{font-size:11px;color:var(--mu);text-transform:capitalize}
+.ref-mid{flex:1}
+.ref-comm{font-size:15px;font-weight:600;color:var(--ok);white-space:nowrap}
+.client-input{width:100%;background:rgba(44,44,62,.4);border:1px solid var(--bd);border-radius:8px;padding:8px 12px;color:var(--tx);font-family:var(--font-b);font-size:13px;margin-top:6px;outline:none;transition:border-color .15s}
+.client-input:focus{border-color:var(--gold-dim)}
+.client-input::placeholder{color:var(--mu)}
+.client-saved{font-size:12px;color:var(--ok);margin-top:4px;display:none}
+.empty{text-align:center;padding:40px 20px;color:var(--mu);font-size:14px}
+.btn{background:var(--gold);color:#000;border:none;border-radius:8px;padding:10px 20px;font-family:var(--font-b);font-size:13px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:6px}
+.btn:hover{opacity:.9}
+.status{font-size:12px;color:var(--mu);margin-top:4px}
+.err{background:rgba(255,80,80,.08);border:1px solid rgba(255,80,80,.2);color:#ff6b6b;border-radius:10px;padding:14px 18px;font-size:13px;margin-bottom:16px}
+.badge-live{background:rgba(79,200,122,.12);border:1px solid rgba(79,200,122,.3);color:var(--ok);font-size:11px;padding:3px 10px;border-radius:100px;margin-left:auto}
+.ref-time{font-size:11px;color:var(--mu)}
+.month-label{font-size:11px;color:var(--gold);font-weight:600;letter-spacing:.06em;text-transform:uppercase;margin:16px 0 8px;padding:0 0 6px;border-bottom:1px solid rgba(212,168,71,.2)}
+.month-label:first-child{margin-top:0}
+</style>
+</head>
+<body>
+<div class="hdr">
+  <div class="lmark">B</div>
+  <div class="htxt">
+    <h1>Brasil Beauty Nails</h1>
+    <p>Area Personale Partner</p>
+  </div>
+  <div class="badge-live" id="liveTag">⏳ Caricamento…</div>
+</div>
+
+<div class="pg">
+  <div class="hero">
+    <div class="hero-name" id="heroName">Ciao, Partner!</div>
+    <div class="hero-sub">I tuoi referral · Prati, Roma</div>
+  </div>
+
+  <div class="sgrid">
+    <div class="stile">
+      <div class="slabel">Totale</div>
+      <div class="sval" id="totCount">—</div>
+      <div class="ssub">referral inviati</div>
+    </div>
+    <div class="stile">
+      <div class="slabel">Questo mese</div>
+      <div class="sval" id="monthCount">—</div>
+      <div class="ssub" id="monthLabel">—</div>
+    </div>
+    <div class="stile">
+      <div class="slabel">Commissioni</div>
+      <div class="sval" id="totComm">—</div>
+      <div class="ssub">totale maturato</div>
+    </div>
+  </div>
+
+  <div id="errBox" class="err" style="display:none"></div>
+
+  <div class="card">
+    <div class="ctitle">I tuoi referral</div>
+    <div id="refList"><div class="empty">Caricamento…</div></div>
+  </div>
+
+  <div style="text-align:center;margin-top:8px">
+    <button class="btn" onclick="sync()" id="syncBtn">🔄 Aggiorna</button>
+    <div class="status" id="syncStatus"></div>
+  </div>
+</div>
+
+<script>
+const SHEET_ID = "1YNj6A4OYUQs9H0as9K7sci_BJ5II1b0neq-aKvZbU84";
+const STORAGE_KEY = "bbn_clients_";
+
+const params = new URLSearchParams(location.search);
+const pid = params.get('p') || '0';
+const nomeParm = params.get('n') || ('Partner ' + pid);
+
+// Mostra nome partner
+document.getElementById('heroName').textContent = 'Ciao, ' + nomeParm + '!';
+
+// Storage chiavi
+function clientKey(idx){ return STORAGE_KEY + pid + '_' + idx; }
+
+function saveClient(idx, val){
+  try{ localStorage.setItem(clientKey(idx), val); }catch(e){}
+}
+function loadClient(idx){
+  try{ return localStorage.getItem(clientKey(idx)) || ''; }catch(e){ return ''; }
+}
+
+// Mesi in italiano
+const MESI = ['Gen','Feb','Mar','Apr','Mag','Giu','Lug','Ago','Set','Ott','Nov','Dic'];
+const MESI_FULL = ['Gennaio','Febbraio','Marzo','Aprile','Maggio','Giugno','Luglio','Agosto','Settembre','Ottobre','Novembre','Dicembre'];
+
+function parseData(str){
+  // formato dd/MM/yyyy
+  if(!str) return null;
+  const p = str.split('/');
+  if(p.length===3) return new Date(+p[2], +p[1]-1, +p[0]);
+  return null;
+}
+
+function monthKey(d){ return d ? d.getFullYear()*100 + d.getMonth() : 0; }
+function monthLabel(d){ return d ? MESI_FULL[d.getMonth()] + ' ' + d.getFullYear() : ''; }
+
+async function sync(){
+  const btn = document.getElementById('syncBtn');
+  const status = document.getElementById('syncStatus');
+  const errBox = document.getElementById('errBox');
+  btn.disabled = true;
+  btn.textContent = '⏳ Aggiorno…';
+  status.textContent = '';
+  errBox.style.display = 'none';
+
+  try{
+    const url = "https://docs.google.com/spreadsheets/d/" + SHEET_ID +
+      "/gviz/tq?tqx=out:json&sheet=Referral%20Log&t=" + Date.now();
+    const res = await fetch(url);
+    const text = await res.text();
+    const jsonStr = text.slice(text.indexOf("{"), text.lastIndexOf("}") + 1);
+    const json = JSON.parse(jsonStr);
+    const rows = (json.table && json.table.rows) || [];
+
+    // Filtra per partner ID
+    const mine = rows
+      .map(r => ({
+        data:   r.c && r.c[0] ? (r.c[0].f || String(r.c[0].v || "")) : "",
+        ora:    r.c && r.c[1] ? String(r.c[1].v || "") : "",
+        giorno: r.c && r.c[2] ? String(r.c[2].v || "") : "",
+        nome:   r.c && r.c[3] ? String(r.c[3].v || "") : "",
+        pid:    r.c && r.c[4] ? String(r.c[4].v || "") : "",
+        comm:   r.c && r.c[5] ? Number(r.c[5].v) || 5 : 5,
+      }))
+      .filter(r => r.pid === pid)
+      .reverse();
+
+    renderData(mine);
+
+    const now = new Date();
+    status.textContent = 'Aggiornato alle ' + String(now.getHours()).padStart(2,'0') + ':' + String(now.getMinutes()).padStart(2,'0');
+    document.getElementById('liveTag').textContent = '● Live';
+    document.getElementById('liveTag').style.color = 'var(--ok)';
+
+  }catch(e){
+    errBox.textContent = '❌ Errore connessione — riprova';
+    errBox.style.display = 'block';
+    document.getElementById('liveTag').textContent = '⚠️ Offline';
+  }
+
+  btn.disabled = false;
+  btn.textContent = '🔄 Aggiorna';
+}
+
+function renderData(rows){
+  // Statistiche
+  const tot = rows.length;
+  const now = new Date();
+  const curMonth = now.getFullYear()*100 + now.getMonth();
+  const thisMonth = rows.filter(r => {
+    const d = parseData(r.data);
+    return d && monthKey(d) === curMonth;
+  }).length;
+  const totComm = rows.reduce((s,r) => s + r.comm, 0);
+
+  document.getElementById('totCount').textContent = tot;
+  document.getElementById('monthCount').textContent = thisMonth;
+  document.getElementById('totComm').textContent = totComm + '€';
+  document.getElementById('monthLabel').textContent = MESI[now.getMonth()] + ' ' + now.getFullYear();
+
+  // Lista referral raggruppata per mese
+  const list = document.getElementById('refList');
+  if(tot === 0){
+    list.innerHTML = '<div class="empty">Nessun referral ancora.<br>Condividi il tuo link e inizia a guadagnare! 🚀</div>';
+    return;
+  }
+
+  // Raggruppa per mese
+  let html = '';
+  let lastMonth = null;
+  rows.forEach((r, i) => {
+    const d = parseData(r.data);
+    const mk = d ? monthKey(d) : 0;
+    if(mk !== lastMonth){
+      lastMonth = mk;
+      html += `<div class="month-label">${d ? monthLabel(d) : 'Data sconosciuta'}</div>`;
+    }
+    const clientVal = loadClient(i);
+    html += `
+    <div class="ref-row">
+      <div>
+        <div class="ref-date">${r.data}</div>
+        <div class="ref-time">${r.ora} · ${r.giorno}</div>
+      </div>
+      <div class="ref-mid">
+        <input class="client-input"
+          placeholder="Nome cliente (opzionale)"
+          value="${clientVal.replace(/"/g,'&quot;')}"
+          data-idx="${i}"
+          onchange="handleClient(this)"
+          oninput="handleClient(this)">
+        <div class="client-saved" id="saved_${i}">✓ Salvato</div>
+      </div>
+      <div class="ref-comm">${r.comm}€</div>
+    </div>`;
+  });
+
+  list.innerHTML = html;
+}
+
+function handleClient(el){
+  const idx = el.dataset.idx;
+  saveClient(idx, el.value);
+  const s = document.getElementById('saved_' + idx);
+  if(s){
+    s.style.display = 'block';
+    clearTimeout(s._t);
+    s._t = setTimeout(() => s.style.display = 'none', 1500);
+  }
+}
+
+// Auto-sync al caricamento
+sync();
+</script>
+</body>
+</html>
