@@ -491,6 +491,7 @@ function renderPartners() {
       </div>
       <button class="qrbtn" onclick="openRef('${p.id}')">+1</button>
       <button class="qrbtn" onclick="showQR('${p.id}')">📱 QR</button>
+      <button class="qrbtn" onclick="copyPartnerLink('${p.id}')">🔗 Link</button>
     </div>`).join("");
 }
 
@@ -514,6 +515,14 @@ function showQR(id) {
 }
 function closeQR() { document.getElementById("qrOv").hidden = true; }
 document.getElementById("qrOv").addEventListener("click", function(e) { if (e.target === this) closeQR(); });
+
+function copyPartnerLink(id) {
+  const p = partners.find(x => x.id === id);
+  if (!p) return;
+  if (!p.pid) { p.pid = nextPid(); save(); }
+  const url = GITHUB_URL + "partner/?p=" + p.pid + "&n=" + encodeURIComponent(p.nome);
+  navigator.clipboard.writeText(url).then(() => toast("🔗 Link copiato!")).catch(() => toast("Errore copia"));
+}
 
 function cpyUrl() {
   const u = document.getElementById("mUrl").textContent;
